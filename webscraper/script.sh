@@ -8,9 +8,13 @@ sed -ni '3,$p' "wijkschool"
 sed -ni '/#END#/!p' "wijkschool"
 sed -i 's/$/\n/g' "wijkschool"
 echo -e "Hi #NAME#,\n\n$(cat wijkschool)\n\n### Mogelijk gemaakt door Seppe Gadeyne - Freelance Web Developer - https://www.linkedin.com/in/seppegadeyne/ ###" > nieuwsbericht.txt
-sed 's/#NAME#/Seppe/g' nieuwsbericht.txt | mail -s "Nieuwsbericht van de wijkschool" seppe@fushia.be
 
-# start_line=`grep -En "^Wijkschool" "wijkschool" | cut -d : -f 1 | cut -d " " -f 2`
-# sed -ni "${start_line},$p" wijkschool
-# tail -n +$(($start_line + 1)) "wijkschool" | head -n -11 > nieuwsbericht.txt
+IFS=$'\n'
 
+for item in `cat list.csv`; do
+	name=`echo $item | cut -d : -f 1`
+	email=`echo $item | cut -d : -f 2`
+	echo "${name} - ${email}"
+	sed "s/#NAME#/${name}/g" nieuwsbericht.txt | mail -s "Nieuwsbericht van de wijkschool" "${email}"
+	sleep 5
+done	
