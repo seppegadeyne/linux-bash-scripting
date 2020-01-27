@@ -1,2 +1,2 @@
 # Linux bash scripts
-For fun and personal use
+For fun and personal use.
