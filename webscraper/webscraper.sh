@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd /home/seppe/Development/linux-bash-scripting/webscraper/
 rm wijkschool* nieuwsbericht.txt
 wget "https://www.maria-middelares.be/nieuws/wijkschool"
 sed -i 's/<div class=\"itemcontent\">/#START#/g; s/<a class=\"btnback\" href=\"\/start\"><span>« terug naar nieuwsoverzicht<\/span><\/a>/#END#/g; s/<[^>]*>//g; s/&nbsp;/ /g; s/^[[:space:]]*//g; /\^I/d; /^$/d;' "wijkschool"
@@ -15,6 +16,6 @@ for item in `cat list.csv`; do
 	name=`echo $item | cut -d : -f 1`
 	email=`echo $item | cut -d : -f 2`
 	echo "${name} - ${email}"
-	sed "s/#NAME#/${name}/g" nieuwsbericht.txt | mail -s "Nieuwsbericht van de wijkschool" "${email}"
+	sed "s/#NAME#/${name}/g" nieuwsbericht.txt | mail -s "Nieuwsbericht van de wijkschool" -aFrom:Seppe\ Gadeyne\<seppe@fushia.be\> "${email}"
 	sleep 5
 done	
