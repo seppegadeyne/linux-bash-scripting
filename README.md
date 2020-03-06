@@ -1,1 +1,2 @@
-# linux-bash-scripting
+# Linux bash scripts
+For fun and personal use.
